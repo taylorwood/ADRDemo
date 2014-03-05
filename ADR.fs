@@ -43,7 +43,8 @@ module Classifier =
 
     let tfidf (idfs: Map<Term, float>) tf =
         let term, frequency = tf
-        let idf = idfs.[term]
+        let hasWeight = idfs.ContainsKey term
+        let idf = if hasWeight then idfs.[term] else 1.0
         term, float frequency * idf
 
     let weightTermFreqs idfs = Seq.map (tfidf idfs)
