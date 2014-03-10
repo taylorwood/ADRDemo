@@ -15,15 +15,8 @@ module Text =
     let toUpper (str: string) = str.ToUpper()
     
     let getWhitelistWords =
-        let splitLine (line: string) = line.Split ','
-        let parseLine line =
-            match splitLine line with
-                | [|word; frequency|] ->
-                    word, int frequency
-                | _ -> failwith "Invalid CSV format"
-
         let csvRows = File.ReadAllLines @"C:\Temp\ADR\Demo\WhitelistDict.csv"
-        csvRows |> Seq.map (parseLine >> fst >> sanitizeText) |> Set.ofSeq
+        csvRows |> Seq.map sanitizeText |> Set.ofSeq
 
     let inWhitelist word = getWhitelistWords |> Set.exists (fun wl -> wl = word)
 
@@ -33,9 +26,6 @@ module Text =
 
     let getWords (text: string) =
         let words = Regex.Split(text, @"\s+")
-        words
-        |> Seq.filter inWhitelist
-        |> getNGrams 1
-        |> Seq.toList
+        words |> Seq.filter inWhitelist |> getNGrams 1 |> Seq.toList
 
     let tokenizeFile = File.ReadAllText >> sanitizeText >> getWords
