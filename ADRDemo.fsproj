@@ -52,6 +52,9 @@
     <Compile Include="ADR.fs" />
     <Compile Include="TrainingData.fs" />
     <Compile Include="Program.fs" />
+    <None Include="README.md" />
+    <None Include="LICENSE.md" />
+    <None Include="Test.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

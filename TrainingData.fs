@@ -26,17 +26,17 @@ module TrainingData =
 
     let getCategoryName path = Path.GetFileName path
 
-    let loadTrainingData adrPath = 
-        let loadCategorySamples path = 
-            let loadSample = tokenizeFile >> getTermFreqs
-            //tokenize all sample files
-            let samplePaths = Directory.GetFiles path
-            printfn "Loading samples for category %A" (getCategoryName path)
-            samplePaths
-            |> Seq.map (fun f -> {Path = f; Frequencies = loadSample f |> Set.ofSeq;})
-            |> Seq.truncate 10
-            |> List.ofSeq
+    let loadCategorySamples path = 
+        let loadSample = tokenizeFile >> getTermFreqs
+        //tokenize all sample files
+        let samplePaths = Directory.GetFiles path
+        printfn "Loading samples for category %A" (getCategoryName path)
+        samplePaths
+        |> Seq.map (fun f -> {Path = f; Frequencies = loadSample f |> Set.ofSeq;})
+        |> Seq.truncate 10
+        |> List.ofSeq
 
+    let loadTrainingData adrPath = 
         //load training samples from category directories
         let catPaths = Directory.GetDirectories adrPath
         let trainingData =
