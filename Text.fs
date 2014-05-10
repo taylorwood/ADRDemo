@@ -18,14 +18,13 @@ module Text =
         let csvRows = File.ReadAllLines @"C:\Temp\ADR\Demo\WhitelistDict.csv"
         csvRows |> Seq.map sanitizeText |> Set.ofSeq
 
-    let inWhitelist word = getWhitelistWords |> Set.exists (fun wl -> wl = word)
+    let inWhitelist word =
+      let whitelist = getWhitelistWords
+      if Set.count whitelist > 0 then
+        whitelist |> Set.exists (fun wl -> wl = word)
+      else
+        true
 
     let getNGrams n words =
         let stringJoin (items: string[]) = System.String.Join(" ", items)
         words |> Seq.windowed n |> Seq.map stringJoin
-
-    let getWords (text: string) =
-        let words = Regex.Split(text, @"\s+")
-        words |> Seq.filter inWhitelist |> getNGrams 1 |> Seq.toList
-
-    let tokenizeFile = File.ReadAllText >> sanitizeText >> getWords

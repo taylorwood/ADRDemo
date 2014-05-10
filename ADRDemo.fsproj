@@ -48,9 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Compile Include="Types.fs" />
     <Compile Include="Text.fs" />
-    <Compile Include="ADR.fs" />
-    <Compile Include="TrainingData.fs" />
+    <Compile Include="Classifier.fs" />
+    <Compile Include="NGramTokenizer.fs" />
+    <Compile Include="TFIDFCalculator.fs" />
     <Compile Include="Program.fs" />
     <None Include="README.md" />
     <None Include="LICENSE.md" />

@@ -9,25 +9,11 @@ module Classifier =
         printfn "%A elapsed" stopwatch.Elapsed
         result
 
-    type Category = string
-    type Term = string //using strings for demo purposes, would normally tokenize as int
-    type TermFrequency = Term * int
-    type TrainingSample = {Path: string; Frequencies: Set<TermFrequency>}
-    type TFIDF = Term * float
-    type WeightedSample = Set<TFIDF>
-    type TrainingData = Map<Category, TrainingSample list>
-    type TrainedData = Map<Category, WeightedSample list>
-    type TFIDFData = Map<Term, float>
-
     let docFreq allSamples term =
         let sampleHasTerm sample = sample.Frequencies |> Seq.exists (fun w -> fst w = term)
         allSamples |> Seq.filter sampleHasTerm |> Seq.length
 
-    let getTermFreqs words =
-        //group the words by word
-        let grpWords = Seq.groupBy (fun w -> w) words
-        //convert groupings to TermFrequency sequence
-        grpWords |> Seq.map (fun gw -> fst gw, Seq.length (snd gw))
+    let getTermFreqs words = words |> Seq.countBy (fun w -> w)
 
     let calcInverseDocFreq sampleCount docFrequency = 
         System.Math.Log (float sampleCount / (float docFrequency + 1.0))
