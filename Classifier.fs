@@ -55,9 +55,7 @@ module Classifier =
         (Seq.sum commonKnownWeights + Seq.sum commonUnknownWeights)
         / (Seq.sum unknownWeights + Seq.sum knownWeights)
 
-    let calcCategoryProbabilities (trainedData: TrainedData) query =
-        let allSamples = trainedData |> Seq.map (fun d -> d.Value)
-        
+    let calcCategoryProbabilities (trainedData: TrainedData) query =        
         //calculate similarity score per category, using highest score from each
         let calcSim ws = similarity query ws
         let scoreSamples samples = samples |> Seq.map calcSim
