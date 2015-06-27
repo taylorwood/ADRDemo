@@ -2,15 +2,16 @@
 
 module Text =
 
+    open System
     open System.IO
     open System.Text.RegularExpressions
 
-    let isCharAllowed c =
-        System.Char.IsLetterOrDigit c || System.Char.IsWhiteSpace c || c = '-'
+    let inline isCharAllowed c =
+        Char.IsLetterOrDigit c || Char.IsWhiteSpace c || c = '-'
 
     let sanitizeText (text: string) =
         let cleanChars = text |> Seq.filter isCharAllowed |> Seq.toArray
-        new System.String(cleanChars)
+        new String(cleanChars)
 
     let toUpper (str: string) = str.ToUpper()
     
